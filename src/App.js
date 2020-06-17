@@ -20,6 +20,7 @@ class App extends React.Component {
     this.setState({
       todos: this.state.todos.concat(todo),
     });
+    // タスクを追加後、フォームの値を空にする
     e.target.title.value = '';
   };
 
