@@ -31,6 +31,8 @@ class App extends React.Component {
     this.setState({
       todos: this.state.todos.concat(todo),
     });
+    // inputの中身を空にしたい
+    e.target.title.value = '';
   };
 
   render() {
