@@ -1,0 +1,22 @@
+.wrapper {
+  margin: 50px auto 0;
+  width: 1000px;
+}
+
+.progress-list {
+  display: flex;
+}
+
+.todo-status th,
+.todo-status td {
+  padding-right: 16px;
+  text-align: left;
+}
+
+.todo-item__title {
+  min-width: 200px;
+}
+
+.add-button {
+  margin-left: 8px;
+}
