@@ -5,18 +5,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [
-        {
-          id: 1,
-          title: 'test',
-          status: 'imcomplete',
-        },
-        {
-          id: 2,
-          title: 'test2',
-          status: 'imcomplete',
-        },
-      ],
+      todos: [],
     };
     this.addTodo = this.addTodo.bind(this);
   }
@@ -31,7 +20,6 @@ class App extends React.Component {
     this.setState({
       todos: this.state.todos.concat(todo),
     });
-    // inputの中身を空にしたい
     e.target.title.value = '';
   };
 
