@@ -12,16 +12,18 @@ class App extends React.Component {
 
   addTodo = (e) => {
     e.preventDefault();
-    const todo = {
-      id: this.state.todos.length + 1,
-      title: e.target.title.value,
-      status: 'imcomplete',
-    };
-    this.setState({
-      todos: this.state.todos.concat(todo),
-    });
-    // タスクを追加後、フォームの値を空にする
-    e.target.title.value = '';
+    if (e.target.title.value) {
+      const todo = {
+        id: this.state.todos.length + 1,
+        title: e.target.title.value,
+        status: 'imcomplete',
+      };
+      this.setState({
+        todos: this.state.todos.concat(todo),
+      });
+      // タスクを追加後、フォームの値を空にする
+      e.target.title.value = '';
+    }
   };
 
   render() {
