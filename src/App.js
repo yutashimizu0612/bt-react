@@ -26,6 +26,13 @@ class App extends React.Component {
     }
   };
 
+  deleteTodo = (index) => {
+    this.state.todos.splice(index, 1);
+    this.setState({
+      todos: this.state.todos,
+    });
+  };
+
   render() {
     return (
       <div className="wrapper">
@@ -55,11 +62,11 @@ class App extends React.Component {
           <tbody>
             {this.state.todos.map((todo, index) => (
               <tr key={index} className="todo-item">
-                <td>{todo.id}</td>
+                <td>{index}</td>
                 <td className="todo-item__title">{todo.title}</td>
                 <td className="button-wrapper">
                   <button>作業中</button>
-                  <button>削除</button>
+                  <button onClick={() => this.deleteTodo(index)}>削除</button>
                 </td>
               </tr>
             ))}
