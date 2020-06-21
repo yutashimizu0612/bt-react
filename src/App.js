@@ -14,7 +14,6 @@ class App extends React.Component {
     e.preventDefault();
     if (e.target.title.value) {
       const todo = {
-        id: this.state.todos.length + 1,
         title: e.target.title.value,
         complete: false,
       };
