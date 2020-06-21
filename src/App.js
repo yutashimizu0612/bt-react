@@ -77,10 +77,18 @@ class App extends React.Component {
                 <td>{index}</td>
                 <td className="todo-item__title">{todo.title}</td>
                 <td className="button-wrapper">
-                  <button onClick={() => this.toggleTodoStatus(index)}>
+                  <button
+                    onClick={() => this.toggleTodoStatus(index)}
+                    className="button"
+                  >
                     {todo.complete ? '完了' : '作業中'}
                   </button>
-                  <button onClick={() => this.deleteTodo(index)}>削除</button>
+                  <button
+                    onClick={() => this.deleteTodo(index)}
+                    className="button"
+                  >
+                    削除
+                  </button>
                 </td>
               </tr>
             ))}

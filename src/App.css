@@ -7,6 +7,10 @@
   display: flex;
 }
 
+.button {
+  min-width: 56px;
+}
+
 .todo-status th,
 .todo-status td {
   padding-right: 16px;
