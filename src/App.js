@@ -33,9 +33,7 @@ class App extends React.Component {
       }
       return todo;
     });
-    this.setState({
-      todos: todos,
-    });
+    this.setState({ todos });
   };
 
   deleteTodo = (index) => {
