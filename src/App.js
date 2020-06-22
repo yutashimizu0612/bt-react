@@ -14,9 +14,8 @@ class App extends React.Component {
     e.preventDefault();
     if (e.target.title.value) {
       const todo = {
-        id: this.state.todos.length + 1,
         title: e.target.title.value,
-        status: 'imcomplete',
+        complete: false,
       };
       this.setState({
         todos: this.state.todos.concat(todo),
@@ -24,6 +23,17 @@ class App extends React.Component {
       // タスクを追加後、フォームの値を空にする
       e.target.title.value = '';
     }
+  };
+
+  toggleTodoStatus = (todoIndex) => {
+    const todos = this.state.todos.map((todo, index) => {
+      // ボタン押下のtodoのみcompleteのステータスを変更
+      if (todoIndex === index) {
+        todo.complete = !todo.complete;
+      }
+      return todo;
+    });
+    this.setState({ todos });
   };
 
   deleteTodo = (index) => {
@@ -65,8 +75,18 @@ class App extends React.Component {
                 <td>{index}</td>
                 <td className="todo-item__title">{todo.title}</td>
                 <td className="button-wrapper">
-                  <button>作業中</button>
-                  <button onClick={() => this.deleteTodo(index)}>削除</button>
+                  <button
+                    onClick={() => this.toggleTodoStatus(index)}
+                    className="button"
+                  >
+                    {todo.complete ? '完了' : '作業中'}
+                  </button>
+                  <button
+                    onClick={() => this.deleteTodo(index)}
+                    className="button"
+                  >
+                    削除
+                  </button>
                 </td>
               </tr>
             ))}
