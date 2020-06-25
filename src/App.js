@@ -15,8 +15,7 @@ class App extends React.Component {
     if (e.target.title.value) {
       const todo = {
         title: e.target.title.value,
-        complete: false,
-        status: 'working',
+        status: 'working', // working/complete
       };
       this.setState({
         todos: this.state.todos.concat(todo),
@@ -28,9 +27,13 @@ class App extends React.Component {
 
   toggleTodoStatus = (todoIndex) => {
     const todos = this.state.todos.map((todo, index) => {
-      // ボタン押下のtodoのみcompleteのステータスを変更
+      // ボタン押下のtodoのみstatusのステータスを変更
       if (todoIndex === index) {
-        todo.complete = !todo.complete;
+        if (todo.status === 'working') {
+          todo.status = 'complete';
+        } else {
+          todo.status = 'working';
+        }
       }
       return todo;
     });
@@ -107,7 +110,7 @@ class App extends React.Component {
                         onClick={() => this.toggleTodoStatus(index)}
                         className="button"
                       >
-                        {todo.complete ? '完了' : '作業中'}
+                        {todo.status === 'complete' ? '完了' : '作業中'}
                       </button>
                       <button
                         onClick={() => this.deleteTodo(index)}
