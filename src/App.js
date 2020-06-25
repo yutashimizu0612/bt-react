@@ -7,7 +7,6 @@ class App extends React.Component {
     this.state = {
       todos: [],
     };
-    this.addTodo = this.addTodo.bind(this);
   }
 
   addTodo = (e) => {
@@ -94,7 +93,7 @@ class App extends React.Component {
         </table>
         <section>
           <h2>新規タスクの追加</h2>
-          <form onSubmit={this.addTodo}>
+          <form onSubmit={(e) => this.addTodo(e)}>
             <input type="text" name="title" />
             <input type="submit" value="追加" className="add-button" />
           </form>
