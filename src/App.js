@@ -95,27 +95,31 @@ class App extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.todos.map((todo, index) => (
-              // this.state.display === 'all' || this.state.display === todo.statusの場合のみレンダリング
-              <tr key={index} className="todo-item">
-                <td>{index}</td>
-                <td className="todo-item__title">{todo.title}</td>
-                <td className="button-wrapper">
-                  <button
-                    onClick={() => this.toggleTodoStatus(index)}
-                    className="button"
-                  >
-                    {todo.complete ? '完了' : '作業中'}
-                  </button>
-                  <button
-                    onClick={() => this.deleteTodo(index)}
-                    className="button"
-                  >
-                    削除
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {this.state.todos.map((todo, index) => {
+              // 表示ステータスが一致or'all'の場合のみレンダリング
+              if (this.state.display === 'all' || this.state.display === todo.status) {
+                return(
+                  <tr key={index} className="todo-item">
+                    <td>{index}</td>
+                    <td className="todo-item__title">{todo.title}</td>
+                    <td className="button-wrapper">
+                      <button
+                        onClick={() => this.toggleTodoStatus(index)}
+                        className="button"
+                      >
+                        {todo.complete ? '完了' : '作業中'}
+                      </button>
+                      <button
+                        onClick={() => this.deleteTodo(index)}
+                        className="button"
+                      >
+                        削除
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+            })}
           </tbody>
         </table>
         <section>
