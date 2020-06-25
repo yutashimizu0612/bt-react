@@ -98,9 +98,10 @@ class App extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.todos.map((todo, index) => {
+            {this.state.todos
+              .filter(todo => this.state.display === 'all' || this.state.display === todo.status)
+              .map((todo, index) => {
               // 表示ステータスが一致or'all'の場合のみレンダリング
-              if (this.state.display === 'all' || this.state.display === todo.status) {
                 return(
                   <tr key={index} className="todo-item">
                     <td>{index}</td>
@@ -121,7 +122,6 @@ class App extends React.Component {
                     </td>
                   </tr>
                 );
-              }
             })}
           </tbody>
         </table>
