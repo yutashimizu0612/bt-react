@@ -101,30 +101,29 @@ class App extends React.Component {
           </thead>
           <tbody>
             {this.state.todos
-              .filter(todo => this.state.display === 'all' || this.state.display === todo.status)
-              .map((todo, index) => {
               // 表示ステータスが一致or'all'の場合のみレンダリング
-                return(
-                  <tr key={todo.id} className="todo-item">
-                    <td>{todo.id}</td>
-                    <td className="todo-item__title">{todo.title}</td>
-                    <td className="button-wrapper">
-                      <button
-                        onClick={() => this.toggleTodoStatus(todo.id)}
-                        className="button"
-                      >
-                        {todo.status === 'complete' ? '完了' : '作業中'}
-                      </button>
-                      <button
-                        onClick={() => this.deleteTodo(todo.id)}
-                        className="button"
-                      >
-                        削除
-                      </button>
-                    </td>
-                  </tr>
-                );
-            })}
+              .filter(todo => this.state.display === 'all' || this.state.display === todo.status)
+              .map((todo) => (
+                <tr key={todo.id} className="todo-item">
+                  <td>{todo.id}</td>
+                  <td className="todo-item__title">{todo.title}</td>
+                  <td className="button-wrapper">
+                    <button
+                      onClick={() => this.toggleTodoStatus(todo.id)}
+                      className="button"
+                    >
+                      {todo.status === 'complete' ? '完了' : '作業中'}
+                    </button>
+                    <button
+                      onClick={() => this.deleteTodo(todo.id)}
+                      className="button"
+                    >
+                      削除
+                    </button>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <section>
