@@ -6,40 +6,52 @@ class App extends React.Component {
     super(props);
     this.state = {
       todos: [],
+      display: 'all',
     };
-    this.addTodo = this.addTodo.bind(this);
   }
 
   addTodo = (e) => {
     e.preventDefault();
     if (e.target.title.value) {
+      const todos = this.state.todos;
       const todo = {
+        id: todos.length === 0 ? 1 : todos[todos.length - 1].id + 1,
         title: e.target.title.value,
-        complete: false,
+        status: 'working', // working/complete
       };
       this.setState({
-        todos: this.state.todos.concat(todo),
+        todos: todos.concat(todo),
       });
       // タスクを追加後、フォームの値を空にする
       e.target.title.value = '';
     }
   };
 
-  toggleTodoStatus = (todoIndex) => {
-    const todos = this.state.todos.map((todo, index) => {
-      // ボタン押下のtodoのみcompleteのステータスを変更
-      if (todoIndex === index) {
-        todo.complete = !todo.complete;
+  toggleTodoStatus = (todoId) => {
+    const todos = this.state.todos.map((todo) => {
+      // ボタン押下のtodoのみstatusのステータスを変更
+      if (todoId === todo.id) {
+        if (todo.status === 'working') {
+          todo.status = 'complete';
+        } else {
+          todo.status = 'working';
+        }
       }
       return todo;
     });
     this.setState({ todos });
   };
 
-  deleteTodo = (index) => {
-    this.state.todos.splice(index, 1);
+  changeDisplayStatus = (e) => {
     this.setState({
-      todos: this.state.todos,
+      display: e.target.value,
+    });
+  };
+
+  deleteTodo = (id) => {
+    const filterdTodos = this.state.todos.filter(todo => todo.id !== id);
+    this.setState({
+      todos: filterdTodos,
     });
   };
 
@@ -49,15 +61,33 @@ class App extends React.Component {
         <h1>ToDoリスト</h1>
         <ul className="progress-list">
           <li>
-            <input type="radio" name="progress" id="all" />
+            <input
+              type="radio"
+              value="all"
+              name="progress"
+              id="all"
+              onChange={(e) => this.changeDisplayStatus(e)}
+            />
             <label htmlFor="all">すべて</label>
           </li>
           <li>
-            <input type="radio" name="progress" id="working" />
+            <input
+              type="radio"
+              value="working"
+              name="progress"
+              id="working"
+              onChange={(e) => this.changeDisplayStatus(e)}
+            />
             <label htmlFor="working">作業中</label>
           </li>
           <li>
-            <input type="radio" name="progress" id="complete" />
+            <input
+              type="radio"
+              value="complete"
+              name="progress"
+              id="complete"
+              onChange={(e) => this.changeDisplayStatus(e)}
+            />
             <label htmlFor="complete">完了</label>
           </li>
         </ul>
@@ -70,31 +100,35 @@ class App extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.todos.map((todo, index) => (
-              <tr key={index} className="todo-item">
-                <td>{index}</td>
-                <td className="todo-item__title">{todo.title}</td>
-                <td className="button-wrapper">
-                  <button
-                    onClick={() => this.toggleTodoStatus(index)}
-                    className="button"
-                  >
-                    {todo.complete ? '完了' : '作業中'}
-                  </button>
-                  <button
-                    onClick={() => this.deleteTodo(index)}
-                    className="button"
-                  >
-                    削除
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {this.state.todos
+              // 表示ステータスが一致or'all'の場合のみレンダリング
+              .filter(todo => this.state.display === 'all' || this.state.display === todo.status)
+              .map((todo) => (
+                <tr key={todo.id} className="todo-item">
+                  <td>{todo.id}</td>
+                  <td className="todo-item__title">{todo.title}</td>
+                  <td className="button-wrapper">
+                    <button
+                      onClick={() => this.toggleTodoStatus(todo.id)}
+                      className="button"
+                    >
+                      {todo.status === 'complete' ? '完了' : '作業中'}
+                    </button>
+                    <button
+                      onClick={() => this.deleteTodo(todo.id)}
+                      className="button"
+                    >
+                      削除
+                    </button>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <section>
           <h2>新規タスクの追加</h2>
-          <form onSubmit={this.addTodo}>
+          <form onSubmit={(e) => this.addTodo(e)}>
             <input type="text" name="title" />
             <input type="submit" value="追加" className="add-button" />
           </form>
